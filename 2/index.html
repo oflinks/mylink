@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+
+<!-- ================================================================== -->
+<!--  ВСЕ НАСТРОЙКИ СТРАНИЦЫ — МЕНЯЙ ТОЛЬКО ЭТОТ БЛОК (до слова КОНЕЦ)  -->
+<!-- ================================================================== -->
+<script>
+const CONFIG = {
+
+  /* --- Заголовок вкладки браузера и превью при отправке ссылки --- */
+  pageTitle:    "Private Links",
+  pageDesc:     "Exclusive selections, behind-the-scenes moments and personal answers — choose your favorite place.",
+  ogImage:      "media/og.png",          // картинка-превью (можно оставить пустым "")
+
+  /* --- Фон --- */
+  background:   "media/background.png",  // путь к фото или прямая ссылка https://...
+  bgDarkness:   0.62,                    // затемнение фона: 0 = светло, 1 = чёрный
+  bgBlur:       0,                       // размытие фона в px, например 8
+
+  /* --- Верхняя строка --- */
+  badgeText:    "Первая версия",         // левая плашка. Пустая строка "" — скрыть
+  shareText:    "Share",                 // правая кнопка «поделиться»
+
+  /* --- Шапка карточки --- */
+  avatarLetter: "Y",                     // буква в квадратике
+  avatarImage:  "",                      // ИЛИ путь к фото аватара — тогда буква не показывается
+  brandText:    "Private Links",         // подпись справа от аватара
+
+  /* --- Текст --- */
+  title:        "Where to next?",
+  subtitle:     "Exclusive selections, behind-the-scenes moments and personal answers — choose your favorite place.",
+
+  /* --- Главные кнопки-ссылки ---
+     highlight: true  — синяя выделенная кнопка
+     highlight: false — тёмная кнопка
+     Можно добавлять/удалять блоки { ... } сколько угодно.                 */
+  links: [
+    {
+      icon:      "OF",                               // текст в квадратике (или см. iconImage ниже)
+      iconImage: "",                                 // путь к лого вместо текста
+      label:     "OnlyFans",                         // мелкая подпись сверху
+      title:     "OnlyFans",                         // крупное название
+      desc:      "Private drops and direct messages", // описание
+      url:       "https://onlyfans.com/diane_kassell/c2",
+      highlight: true
+    }
+  ],
+
+  /* --- Блок соцсетей --- */
+  socialsTitle: "Keep up with me",
+  showCounter:  true,                    // показывать число справа (04)
+  socials: [
+    { text: "YT", image: "", name: "YouTube",   url: "https://onlyfans.com/diane_kassell/c2" },
+    { text: "TT", image: "", name: "TikTok",    url: "https://onlyfans.com/diane_kassell/c2" },
+    { text: "IG", image: "", name: "Instagram", url: "https://onlyfans.com/diane_kassell/c2" },
+    { text: "X",  image: "", name: "Twitter",   url: "https://onlyfans.com/diane_kassell/c2" }
+  ],
+
+  /* --- Нижняя строка --- */
+  footerLeft:   "18+ only",
+  footerRight:  "Private and direct",
+
+  /* --- Цвет выделенной кнопки --- */
+  accentFrom:   "#2e95ff",
+  accentTo:     "#0a6ae8"
+};
+</script>
+<!-- ========================= КОНЕЦ НАСТРОЕК ========================= -->
+
+<title>Private Links</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@1,500;1,600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --accent-from:#2e95ff;
+  --accent-to:#0a6ae8;
+  --text:#ffffff;
+  --muted:#9aa4b2;
+  --muted-2:#7f8896;
+  --line:rgba(255,255,255,.10);
+  --glass:rgba(18,22,28,.62);
+  --tile:rgba(255,255,255,.055);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{height:100%}
+body{
+  margin:0;
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;
+  color:var(--text);
+  background:#07090c;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:24px 14px;
+  min-height:100dvh;
+}
+#bg{
+  position:fixed;
+  inset:-20px;
+  background-position:center;
+  background-size:cover;
+  z-index:0;
+}
+#bgShade{
+  position:fixed;
+  inset:0;
+  z-index:1;
+  background:
+    radial-gradient(120% 80% at 50% 0%,rgba(0,0,0,.25),rgba(0,0,0,.75)),
+    linear-gradient(180deg,rgba(6,8,11,.35),rgba(6,8,11,.85));
+}
+
+.card{
+  position:relative;
+  z-index:2;
+  width:100%;
+  max-width:470px;
+  padding:20px 20px 18px;
+  border-radius:30px;
+  background:var(--glass);
+  border:1px solid var(--line);
+  backdrop-filter:blur(26px) saturate(130%);
+  -webkit-backdrop-filter:blur(26px) saturate(130%);
+  box-shadow:0 30px 70px rgba(0,0,0,.55);
+}
+
+/* верхняя строка */
+.topbar{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.badge{
+  font-size:11.5px;letter-spacing:.14em;text-transform:uppercase;color:#c9d1dc;
+  padding:12px 20px;border-radius:999px;border:1px solid var(--line);background:rgba(255,255,255,.04);
+}
+.share{
+  display:inline-flex;align-items:center;gap:8px;cursor:pointer;
+  font:inherit;font-size:14px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:#fff;
+  padding:13px 20px;border-radius:999px;border:1px solid rgba(255,255,255,.16);
+  background:rgba(255,255,255,.07);transition:background .18s ease;
+}
+.share:hover{background:rgba(255,255,255,.13)}
+.share svg{width:13px;height:13px;opacity:.9}
+
+/* шапка */
+.head{display:flex;align-items:center;gap:18px;margin:34px 2px 0}
+.avatar{
+  width:64px;height:64px;border-radius:20px;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;overflow:hidden;
+  border:1px solid rgba(255,255,255,.14);
+  background:linear-gradient(160deg,rgba(255,255,255,.12),rgba(255,255,255,.03));
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;font-size:30px;
+}
+.avatar img{width:100%;height:100%;object-fit:cover}
+.brand{font-size:12px;letter-spacing:.28em;text-transform:uppercase;color:#c2cad6;font-weight:500}
+
+/* текст */
+h1{
+  font-family:"Playfair Display",Georgia,serif;font-style:italic;font-weight:500;
+  font-size:clamp(38px,11vw,50px);line-height:1.02;margin:26px 2px 18px;letter-spacing:-.01em;
+}
+.sub{margin:0 2px;font-size:16px;line-height:1.55;color:#aab3c0;max-width:44ch}
+
+/* ссылки */
+.links{margin-top:26px;display:flex;flex-direction:column;gap:12px}
+.link{
+  display:flex;align-items:center;gap:15px;text-decoration:none;color:inherit;
+  padding:15px 16px;border-radius:22px;
+  background:var(--tile);border:1px solid var(--line);
+  transition:transform .16s ease,background .16s ease;
+}
+.link:hover{background:rgba(255,255,255,.09)}
+.link:active{transform:scale(.985)}
+.link.hl{
+  background:linear-gradient(105deg,var(--accent-from),var(--accent-to));
+  border-color:rgba(255,255,255,.18);
+  box-shadow:0 14px 34px rgba(16,110,232,.35);
+}
+.link.hl:hover{filter:brightness(1.06);background:linear-gradient(105deg,var(--accent-from),var(--accent-to))}
+.ico{
+  width:52px;height:52px;border-radius:16px;flex:0 0 auto;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;
+  font-size:15px;font-weight:700;letter-spacing:.02em;
+  background:rgba(255,255,255,.09);border:1px solid rgba(255,255,255,.12);
+}
+.link.hl .ico{background:rgba(255,255,255,.22);border-color:rgba(255,255,255,.28)}
+.ico img{width:100%;height:100%;object-fit:cover}
+.meta{flex:1 1 auto;min-width:0}
+.meta .lbl{font-size:10.5px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.62);margin-bottom:3px}
+.link.hl .meta .lbl{color:rgba(255,255,255,.78)}
+.meta .ttl{font-size:19px;font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.meta .dsc{font-size:13.5px;color:#9aa4b2;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.link.hl .meta .dsc{color:rgba(255,255,255,.82)}
+.go{
+  width:40px;height:40px;border-radius:50%;flex:0 0 auto;
+  display:flex;align-items:center;justify-content:center;
+  border:1px solid rgba(255,255,255,.16);background:rgba(255,255,255,.07);
+}
+.link.hl .go{border-color:rgba(255,255,255,.3);background:rgba(255,255,255,.18)}
+.go svg{width:14px;height:14px}
+
+/* соцсети */
+.sectionbar{display:flex;align-items:center;justify-content:space-between;margin:30px 4px 16px}
+.sectionbar span{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:#8e97a4}
+.socials{display:flex;justify-content:center;gap:14px;flex-wrap:wrap}
+.soc{
+  width:54px;height:54px;border-radius:50%;overflow:hidden;
+  display:flex;align-items:center;justify-content:center;text-decoration:none;
+  font-size:13px;font-weight:600;color:#dfe4ea;letter-spacing:.04em;
+  border:1px solid var(--line);background:rgba(255,255,255,.05);
+  transition:background .16s ease,transform .16s ease;
+}
+.soc:hover{background:rgba(255,255,255,.12)}
+.soc:active{transform:scale(.94)}
+.soc img{width:100%;height:100%;object-fit:cover}
+
+/* низ */
+.foot{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:24px;padding-top:18px;border-top:1px solid var(--line);
+  font-size:11px;letter-spacing:.16em;text-transform:uppercase;color:#7c8593;
+}
+
+/* всплывашка «ссылка скопирована» */
+#toast{
+  position:fixed;left:50%;bottom:28px;transform:translate(-50%,14px);
+  z-index:5;padding:11px 20px;border-radius:999px;font-size:13.5px;
+  background:rgba(20,24,30,.95);border:1px solid var(--line);color:#e8edf3;
+  opacity:0;pointer-events:none;transition:opacity .22s ease,transform .22s ease;
+}
+#toast.on{opacity:1;transform:translate(-50%,0)}
+
+a:focus-visible,button:focus-visible{outline:2px solid #7ab6ff;outline-offset:3px}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+@media (max-width:420px){
+  .card{padding:16px 15px 15px;border-radius:26px}
+  .badge{padding:11px 15px;font-size:10.5px}
+  .share{padding:11px 16px;font-size:13px}
+  .ico{width:48px;height:48px}
+  .meta .ttl{font-size:17.5px}
+}
+</style>
+</head>
+<body>
+
+<div id="bg"></div>
+<div id="bgShade"></div>
+<main class="card" id="card"></main>
+<div id="toast">Ссылка скопирована</div>
+
+<script>
+(function(){
+  const C = CONFIG;
+  const esc = s => String(s==null?"":s).replace(/[&<>"]/g,m=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[m]));
+  const arrow = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M7 17L17 7M9 7h8v8"/></svg>';
+
+  // мета-теги
+  document.title = C.pageTitle || "Private Links";
+  const metas = [["description",C.pageDesc],["og:title",C.pageTitle],["og:description",C.pageDesc],["og:image",C.ogImage]];
+  metas.forEach(([k,v])=>{ if(!v) return;
+    const m=document.createElement("meta");
+    m.setAttribute(k.startsWith("og:")?"property":"name",k); m.content=v; document.head.appendChild(m);
+  });
+
+  // фон и акцент
+  if(C.background) document.getElementById("bg").style.backgroundImage = `url("${C.background}")`;
+  if(C.bgBlur) document.getElementById("bg").style.filter = `blur(${C.bgBlur}px)`;
+  document.getElementById("bgShade").style.background =
+    `linear-gradient(180deg,rgba(6,8,11,${C.bgDarkness*0.75}),rgba(6,8,11,${C.bgDarkness}))`;
+  document.documentElement.style.setProperty("--accent-from",C.accentFrom||"#2e95ff");
+  document.documentElement.style.setProperty("--accent-to",C.accentTo||"#0a6ae8");
+
+  const box = (cls,text,img) => img
+    ? `<div class="${cls}"><img src="${esc(img)}" alt=""></div>`
+    : `<div class="${cls}">${esc(text)}</div>`;
+
+  const linksHTML = (C.links||[]).map(l=>`
+    <a class="link${l.highlight?" hl":""}" href="${esc(l.url)}" target="_blank" rel="noopener">
+      ${box("ico",l.icon,l.iconImage)}
+      <div class="meta">
+        ${l.label?`<div class="lbl">${esc(l.label)}</div>`:""}
+        <div class="ttl">${esc(l.title)}</div>
+        ${l.desc?`<div class="dsc">${esc(l.desc)}</div>`:""}
+      </div>
+      <div class="go">${arrow}</div>
+    </a>`).join("");
+
+  const socHTML = (C.socials||[]).map(s=>`
+    <a class="soc" href="${esc(s.url)}" target="_blank" rel="noopener" title="${esc(s.name||"")}" aria-label="${esc(s.name||s.text)}">
+      ${s.image?`<img src="${esc(s.image)}" alt="">`:esc(s.text)}
+    </a>`).join("");
+
+  document.getElementById("card").innerHTML = `
+    <div class="topbar">
+      ${C.badgeText?`<div class="badge">${esc(C.badgeText)}</div>`:`<div></div>`}
+      <button class="share" id="shareBtn">${esc(C.shareText||"Share")} ${arrow}</button>
+    </div>
+
+    <div class="head">
+      ${box("avatar",C.avatarLetter,C.avatarImage)}
+      <div class="brand">${esc(C.brandText)}</div>
+    </div>
+
+    <h1>${esc(C.title)}</h1>
+    <p class="sub">${esc(C.subtitle)}</p>
+
+    <div class="links">${linksHTML}</div>
+
+    ${(C.socials&&C.socials.length)?`
+      <div class="sectionbar">
+        <span>${esc(C.socialsTitle)}</span>
+        ${C.showCounter?`<span>${String(C.socials.length).padStart(2,"0")}</span>`:""}
+      </div>
+      <div class="socials">${socHTML}</div>`:""}
+
+    <div class="foot">
+      <span>${esc(C.footerLeft)}</span>
+      <span>${esc(C.footerRight)}</span>
+    </div>`;
+
+  // кнопка «поделиться»
+  const toast = document.getElementById("toast");
+  document.getElementById("shareBtn").addEventListener("click", async ()=>{
+    const data = {title:C.pageTitle, text:C.pageDesc, url:location.href};
+    try{
+      if(navigator.share){ await navigator.share(data); return; }
+      await navigator.clipboard.writeText(location.href);
+    }catch(e){
+      if(e && e.name==="AbortError") return;
+      const t=document.createElement("textarea");
+      t.value=location.href; document.body.appendChild(t); t.select();
+      try{document.execCommand("copy")}catch(_){ }
+      t.remove();
+    }
+    toast.classList.add("on");
+    setTimeout(()=>toast.classList.remove("on"),1800);
+  });
+})();
+</script>
+</body>
+</html>
